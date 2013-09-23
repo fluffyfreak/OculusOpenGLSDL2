@@ -12,8 +12,6 @@
 #include <GL/gl.h>
 #include <cstdio>
 
-#pragma comment(lib, "glew32.lib")
-
 namespace {
 	void trace(const char* format, ...) 
 	{
