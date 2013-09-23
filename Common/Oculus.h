@@ -17,18 +17,18 @@ public:
 	Oculus();
 	~Oculus();
 
-	void start();
+	void Start();
 
-	bool get_sensor_position(float& x, float& y, float& z) const;
+	bool GetSensorPosition(float& x, float& y, float& z) const;
 
-	bool get_sensor_orientation(float& yaw, float& pitch, float& roll) const;
+	bool GetSensorOrientation(float& yaw, float& pitch, float& roll) const;
 
-	const OVR::HMDInfo& get_HMD_info() const
+	const OVR::HMDInfo& GetHMDInfo() const
 	{
 		return m_HMD_info;
 	}
 
-	OVR::Util::Render::StereoConfig get_stereo_config() const 
+	OVR::Util::Render::StereoConfig GetStereoConfig() const 
 	{ 
 		return m_stereo_config; 
 	}

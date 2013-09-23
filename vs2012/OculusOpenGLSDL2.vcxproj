@@ -15,16 +15,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Avatar.cpp" />
-    <ClCompile Include="..\Main.cpp" />
-    <ClCompile Include="..\Oculus.cpp" />
-    <ClCompile Include="..\Scene.cpp" />
+    <ClCompile Include="..\Common\Avatar.cpp" />
+    <ClCompile Include="..\Common\BaseApp.cpp" />
+    <ClCompile Include="..\Common\EyePatch.cpp" />
+    <ClCompile Include="..\Common\Oculus.cpp" />
+    <ClCompile Include="..\OriginalDemo\OriginalDemo.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Avatar.h" />
-    <ClInclude Include="..\Logging.h" />
-    <ClInclude Include="..\Oculus.h" />
-    <ClInclude Include="..\Scene.h" />
+    <ClInclude Include="..\Common\Avatar.h" />
+    <ClInclude Include="..\Common\BaseApp.h" />
+    <ClInclude Include="..\Common\EyePatch.h" />
+    <ClInclude Include="..\Common\Logging.h" />
+    <ClInclude Include="..\Common\Oculus.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C45AC33E-3C9C-4BB7-B6F1-656FDDED4BF5}</ProjectGuid>
@@ -87,7 +89,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(LIB3RD)OculusSDK\LibOVR\Include;$(LIB3RD)glew-1.10.0\include;$(LIB3RD)SDL2-2.0.0\include;$(LIB3RD)glm-0.9.3.4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Common/;$(LIB3RD)OculusSDK\LibOVR\Include;$(LIB3RD)glew-1.10.0\include;$(LIB3RD)SDL2-2.0.0\include;$(LIB3RD)glm-0.9.3.4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -96,7 +98,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(LIB3RD)OculusSDK\LibOVR\Lib\Win32;$(LIB3RD)SDL2-2.0.0\lib\x86;$(LIB3RD)glew-1.10.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libovr.lib;glew32s.lib;SDL2.lib;SDL2main.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libovr.lib;glew32s.lib;SDL2.lib;SDL2main.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;glu32.lib;opengl32.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='PreRelease|Win32'">
@@ -106,7 +108,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Full</Optimization>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(LIB3RD)OculusSDK\LibOVR\Include;$(LIB3RD)glew-1.10.0\include;$(LIB3RD)SDL2-2.0.0\include;$(LIB3RD)glm-0.9.3.4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Common/;$(LIB3RD)OculusSDK\LibOVR\Include;$(LIB3RD)glew-1.10.0\include;$(LIB3RD)SDL2-2.0.0\include;$(LIB3RD)glm-0.9.3.4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -122,7 +124,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(LIB3RD)OculusSDK\LibOVR\Lib\Win32;$(LIB3RD)SDL2-2.0.0\lib\x86;$(LIB3RD)glew-1.10.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libovr.lib;glew32s.lib;SDL2.lib;SDL2main.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libovr.lib;glew32s.lib;SDL2.lib;SDL2main.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;glu32.lib;opengl32.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OptimizeReferences>false</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
@@ -135,7 +137,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(LIB3RD)OculusSDK\LibOVR\Include;$(LIB3RD)glew-1.10.0\include;$(LIB3RD)SDL2-2.0.0\include;$(LIB3RD)glm-0.9.3.4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Common/;$(LIB3RD)OculusSDK\LibOVR\Include;$(LIB3RD)glew-1.10.0\include;$(LIB3RD)SDL2-2.0.0\include;$(LIB3RD)glm-0.9.3.4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
@@ -148,7 +150,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(LIB3RD)OculusSDK\LibOVR\Lib\Win32;$(LIB3RD)SDL2-2.0.0\lib\x86;$(LIB3RD)glew-1.10.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libovr.lib;glew32s.lib;SDL2.lib;SDL2main.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libovr.lib;glew32s.lib;SDL2.lib;SDL2main.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;glu32.lib;opengl32.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

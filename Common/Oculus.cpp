@@ -20,7 +20,7 @@ Oculus::~Oculus()
 	OVR_DEBUG_STATEMENT(_CrtDumpMemoryLeaks());
 }
 
-void Oculus::start()
+void Oculus::Start()
 {
 	OVR::System::Init(OVR::Log::ConfigureDefaultLog(OVR::LogMask_All));
 		
@@ -89,7 +89,7 @@ void Oculus::start()
 	}
 }
 
-bool Oculus::get_sensor_position(float& x, float& y, float& z) const
+bool Oculus::GetSensorPosition(float& x, float& y, float& z) const
 {
 	// TODO. Some form of positional tracking.
 	x = 0.0f;
@@ -98,7 +98,7 @@ bool Oculus::get_sensor_position(float& x, float& y, float& z) const
 	return false;
 }
 
-bool Oculus::get_sensor_orientation(float& yaw, float& pitch, float& roll) const
+bool Oculus::GetSensorOrientation(float& yaw, float& pitch, float& roll) const
 {
 	yaw = 0.0f;
 	pitch = 0.0f;

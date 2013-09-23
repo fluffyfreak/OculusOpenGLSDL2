@@ -14,40 +14,40 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Common">
-      <UniqueIdentifier>{529ddec0-47be-4ad9-aa88-1b03ed4e14dc}</UniqueIdentifier>
+      <UniqueIdentifier>{74a2157e-3347-4cef-806b-590e10bc9ade}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Common\BaseApp.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\EyePatch.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Oculus.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\OriginalDemo\OriginalDemo.cpp">
+    <ClCompile Include="..\..\Hills\Hills.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Common\Avatar.cpp">
+    <ClCompile Include="..\..\Common\Avatar.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\BaseApp.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\EyePatch.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Oculus.cpp">
       <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Common\BaseApp.h">
+    <ClInclude Include="..\..\Common\Avatar.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\EyePatch.h">
+    <ClInclude Include="..\..\Common\BaseApp.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\Logging.h">
+    <ClInclude Include="..\..\Common\EyePatch.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\Oculus.h">
+    <ClInclude Include="..\..\Common\Logging.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\Avatar.h">
+    <ClInclude Include="..\..\Common\Oculus.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>

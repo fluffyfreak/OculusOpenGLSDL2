@@ -11,7 +11,7 @@
 #include "Avatar.h"
 
 namespace {
-	void apply_gl_matrix(const OVR::Matrix4f& matrix)
+	void ApplyGLMatrix(const OVR::Matrix4f& matrix)
 	{
 		glMultMatrixf(&(matrix.Transposed().M[0][0]));
 	}
@@ -23,13 +23,13 @@ Avatar::Avatar()
 	m_oculus = NULL;
 }
 
-void Avatar::start(const Oculus* oculus)
+void Avatar::Start(const Oculus* oculus)
 {
 	m_oculus = oculus;
 	m_speed = 10.0f;
 }
 
-void Avatar::on_key_down(int key)
+void Avatar::OnKeyDown(int key)
 {
 	switch(key)
 	{
@@ -56,7 +56,7 @@ void Avatar::on_key_down(int key)
 	}
 }
 
-void Avatar::on_key_up(int key)
+void Avatar::OnKeyUp(int key)
 {
 	switch(key)
 	{
@@ -83,47 +83,47 @@ void Avatar::on_key_up(int key)
 	}
 }
 
-const OVR::Vector3f& Avatar::get_position() const 
+const OVR::Vector3f& Avatar::GetPosition() const 
 { 
 	return m_position; 
 }
 
-void Avatar::set_position(const OVR::Vector3f& position)
+void Avatar::SetPosition(const OVR::Vector3f& position)
 {
 	m_position = position;
 }
 
-void Avatar::update(float dt)
+void Avatar::Update(float dt)
 {
 	m_position += m_velocity * dt;
 }
 
-void Avatar::setup_camera(OVR::Util::Render::StereoEye eye)
+void Avatar::SetupCamera(OVR::Util::Render::StereoEye eye)
 {
-	const OVR::HMDInfo& hmd = m_oculus->get_HMD_info();
-	const OVR::Util::Render::StereoEyeParams& params = m_oculus->get_stereo_config().GetEyeRenderParams(eye);
+	const OVR::HMDInfo& hmd = m_oculus->GetHMDInfo();
+	const OVR::Util::Render::StereoEyeParams& params = m_oculus->GetStereoConfig().GetEyeRenderParams(eye);
 	glViewport(params.VP.x, params.VP.y, params.VP.w, params.VP.h);
 		
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	apply_gl_matrix(params.ViewAdjust);
-	apply_gl_matrix(params.Projection);
+	ApplyGLMatrix(params.ViewAdjust);
+	ApplyGLMatrix(params.Projection);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 		
-	OVR::Matrix4f eye_view = get_eye_view(eye);
-	apply_gl_matrix(eye_view);
+	OVR::Matrix4f eye_view = GetEyeView(eye);
+	ApplyGLMatrix(eye_view);
 }
 
-OVR::Matrix4f Avatar::get_eye_view(OVR::Util::Render::StereoEye eye)
+OVR::Matrix4f Avatar::GetEyeView(OVR::Util::Render::StereoEye eye)
 {
 	static const OVR::Vector3f UpVector(0.0f, 1.0f, 0.0f);
 	static const OVR::Vector3f ForwardVector(0.0f, 0.0f, -1.0f);
 	static const OVR::Vector3f RightVector(1.0f, 0.0f, 0.0f);
 
 	float yaw, pitch, roll;
-	m_oculus->get_sensor_orientation(yaw, pitch, roll);
+	m_oculus->GetSensorOrientation(yaw, pitch, roll);
 	OVR::Matrix4f eye_rpy = OVR::Matrix4f::RotationY(yaw) * OVR::Matrix4f::RotationX(pitch) * OVR::Matrix4f::RotationZ(roll);
 
 	OVR::Vector3f eye_pos = m_position;

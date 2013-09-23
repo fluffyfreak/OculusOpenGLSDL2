@@ -18,21 +18,21 @@ class Avatar
 public:
 	Avatar();
 
-	void start(const Oculus* oculus);
+	void Start(const Oculus* oculus);
 
-	void on_key_down(int key);
+	void OnKeyDown(int key);
 
-	void on_key_up(int key);
+	void OnKeyUp(int key);
 
-	const OVR::Vector3f& get_position() const;
+	const OVR::Vector3f& GetPosition() const;
 
-	void set_position(const OVR::Vector3f& position);
+	void SetPosition(const OVR::Vector3f& position);
 
-	void update(float dt);
+	void Update(float dt);
 
-	void setup_camera(OVR::Util::Render::StereoEye eye);
+	void SetupCamera(OVR::Util::Render::StereoEye eye);
 
-	OVR::Matrix4f get_eye_view(OVR::Util::Render::StereoEye eye);
+	OVR::Matrix4f GetEyeView(OVR::Util::Render::StereoEye eye);
 
 private:
 	float m_speed;
