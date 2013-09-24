@@ -2,36 +2,44 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OculusOpenGLSDL2", "OculusOpenGLSDL2.vcxproj", "{C45AC33E-3C9C-4BB7-B6F1-656FDDED4BF5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A90A232-5E2A-4834-AC2A-8FFA4F519025} = {4A90A232-5E2A-4834-AC2A-8FFA4F519025}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hills", "Hills\Hills.vcxproj", "{DD362D2E-520B-470A-AA31-F9C9B3DF4F5E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A90A232-5E2A-4834-AC2A-8FFA4F519025} = {4A90A232-5E2A-4834-AC2A-8FFA4F519025}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BoxDemo", "BoxDemo\BoxDemo.vcxproj", "{BCE4487D-D1E3-489C-939A-B2617E3C1C56}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A90A232-5E2A-4834-AC2A-8FFA4F519025} = {4A90A232-5E2A-4834-AC2A-8FFA4F519025}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommonLib", "CommonLib\CommonLib.vcxproj", "{4A90A232-5E2A-4834-AC2A-8FFA4F519025}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
-		PreRelease|Win32 = PreRelease|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C45AC33E-3C9C-4BB7-B6F1-656FDDED4BF5}.Debug|Win32.ActiveCfg = Debug|Win32
 		{C45AC33E-3C9C-4BB7-B6F1-656FDDED4BF5}.Debug|Win32.Build.0 = Debug|Win32
-		{C45AC33E-3C9C-4BB7-B6F1-656FDDED4BF5}.PreRelease|Win32.ActiveCfg = PreRelease|Win32
-		{C45AC33E-3C9C-4BB7-B6F1-656FDDED4BF5}.PreRelease|Win32.Build.0 = PreRelease|Win32
 		{C45AC33E-3C9C-4BB7-B6F1-656FDDED4BF5}.Release|Win32.ActiveCfg = Release|Win32
 		{C45AC33E-3C9C-4BB7-B6F1-656FDDED4BF5}.Release|Win32.Build.0 = Release|Win32
 		{DD362D2E-520B-470A-AA31-F9C9B3DF4F5E}.Debug|Win32.ActiveCfg = Debug|Win32
 		{DD362D2E-520B-470A-AA31-F9C9B3DF4F5E}.Debug|Win32.Build.0 = Debug|Win32
-		{DD362D2E-520B-470A-AA31-F9C9B3DF4F5E}.PreRelease|Win32.ActiveCfg = Release|Win32
-		{DD362D2E-520B-470A-AA31-F9C9B3DF4F5E}.PreRelease|Win32.Build.0 = Release|Win32
 		{DD362D2E-520B-470A-AA31-F9C9B3DF4F5E}.Release|Win32.ActiveCfg = Release|Win32
 		{DD362D2E-520B-470A-AA31-F9C9B3DF4F5E}.Release|Win32.Build.0 = Release|Win32
 		{BCE4487D-D1E3-489C-939A-B2617E3C1C56}.Debug|Win32.ActiveCfg = Debug|Win32
 		{BCE4487D-D1E3-489C-939A-B2617E3C1C56}.Debug|Win32.Build.0 = Debug|Win32
-		{BCE4487D-D1E3-489C-939A-B2617E3C1C56}.PreRelease|Win32.ActiveCfg = Release|Win32
-		{BCE4487D-D1E3-489C-939A-B2617E3C1C56}.PreRelease|Win32.Build.0 = Release|Win32
 		{BCE4487D-D1E3-489C-939A-B2617E3C1C56}.Release|Win32.ActiveCfg = Release|Win32
 		{BCE4487D-D1E3-489C-939A-B2617E3C1C56}.Release|Win32.Build.0 = Release|Win32
+		{4A90A232-5E2A-4834-AC2A-8FFA4F519025}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4A90A232-5E2A-4834-AC2A-8FFA4F519025}.Debug|Win32.Build.0 = Debug|Win32
+		{4A90A232-5E2A-4834-AC2A-8FFA4F519025}.Release|Win32.ActiveCfg = Release|Win32
+		{4A90A232-5E2A-4834-AC2A-8FFA4F519025}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

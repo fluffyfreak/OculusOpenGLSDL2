@@ -43,7 +43,8 @@ public:
 		BaseApp(),
 		mVAO(UINT_MAX),
 		mVertObjId(UINT_MAX),
-		mColourObjId(UINT_MAX)
+		mColourObjId(UINT_MAX),
+		mElementBufferId(UINT_MAX)
 	{
 	}
 
@@ -97,29 +98,25 @@ private:
 
 	void Cleanup()
 	{
-		if(mVertObjId != UINT_MAX)
-		{
-			const GLboolean glbIsBuffer = glIsBuffer(mVertObjId);
-			if(glbIsBuffer==GL_TRUE) {
-				glDeleteBuffers(1, &mVertObjId);
-				mVertObjId = UINT_MAX;
-			}
+		GLboolean glbIsBuffer = glIsBuffer(mVertObjId);
+		if(glbIsBuffer==GL_TRUE) {
+			glDeleteBuffers(1, &mVertObjId);
+			mVertObjId = UINT_MAX;
 		}
-		if(mColourObjId != UINT_MAX)
-		{
-			const GLboolean glbIsBuffer = glIsBuffer(mColourObjId);
-			if(glbIsBuffer==GL_TRUE) {
-				glDeleteBuffers(1, &mColourObjId);
-				mColourObjId = UINT_MAX;
-			}
+		glbIsBuffer = glIsBuffer(mColourObjId);
+		if(glbIsBuffer==GL_TRUE) {
+			glDeleteBuffers(1, &mColourObjId);
+			mColourObjId = UINT_MAX;
 		}
-		if(mVAO != UINT_MAX)
-		{
-			const GLboolean glbIsVA = glIsVertexArray(mVAO);
-			if(glbIsVA==GL_TRUE) {
-				glDeleteVertexArrays(1, &mVAO);
-				mVAO = UINT_MAX;
-			}
+		glbIsBuffer = glIsBuffer(mElementBufferId);
+		if(glbIsBuffer==GL_TRUE) {
+			glDeleteBuffers(1, &mElementBufferId);
+			mElementBufferId = UINT_MAX;
+		}
+		const GLboolean glbIsVA = glIsVertexArray(mVAO);
+		if(glbIsVA==GL_TRUE) {
+			glDeleteVertexArrays(1, &mVAO);
+			mVAO = UINT_MAX;
 		}
 	}
 

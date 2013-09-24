@@ -18,11 +18,11 @@
 
 #include "BaseApp.h"
 
-class BoxApp : public BaseApp
+class HillsApp : public BaseApp
 {
 public:
-	BoxApp(int argc, char * argv[]) : BaseApp() {}
-	virtual ~BoxApp() {}
+	HillsApp(int argc, char * argv[]) : BaseApp() {}
+	virtual ~HillsApp() {}
 
 	virtual bool Init() { return true; }
 	virtual void Update() {};
@@ -42,7 +42,7 @@ private:
 
 int SDL_main(int argc, char * argv[])
 {	
-	BoxApp theApp(argc, argv);
+	HillsApp theApp(argc, argv);
 
 	if( !theApp.Init() )
 		return 0;
