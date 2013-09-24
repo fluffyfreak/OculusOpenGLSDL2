@@ -86,6 +86,7 @@
     <ClInclude Include="..\..\Common\Oculus.h" />
     <ClInclude Include="..\..\Common\ShaderHelper.h" />
     <ClInclude Include="..\..\Common\TextFile.h" />
+    <ClInclude Include="..\..\Common\VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Common\Avatar.cpp" />
@@ -94,6 +95,7 @@
     <ClCompile Include="..\..\Common\Oculus.cpp" />
     <ClCompile Include="..\..\Common\ShaderHelper.cpp" />
     <ClCompile Include="..\..\Common\TextFile.cpp" />
+    <ClCompile Include="..\..\Common\VertexArray.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

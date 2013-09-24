@@ -21,45 +21,15 @@
     <ClCompile Include="..\..\Hills\Hills.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Common\Avatar.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Common\BaseApp.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Common\EyePatch.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Common\Oculus.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Common\ShaderHelper.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Common\TextFile.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Common\Avatar.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Common\BaseApp.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Common\EyePatch.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Common\Logging.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Common\Oculus.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Common\ShaderHelper.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Common\TextFile.h">
+    <ClInclude Include="..\..\Common\VertexArray.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>

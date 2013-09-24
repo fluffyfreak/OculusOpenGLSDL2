@@ -33,24 +33,39 @@ void Avatar::OnKeyDown(int key)
 {
 	switch(key)
 	{
+	case SDLK_w:
 	case SDLK_UP:
 		{
 			m_velocity.z = -m_speed;
 			break;
 		}
+	case SDLK_s:
 	case SDLK_DOWN:
 		{
 			m_velocity.z = m_speed;
 			break;
 		}
+	case SDLK_a:
 	case SDLK_LEFT:
 		{
 			m_velocity.x = -m_speed;
 			break;
 		}
+	case SDLK_d:
 	case SDLK_RIGHT:
 		{
 			m_velocity.x = m_speed;
+			break;
+		}
+	// vertical
+	case SDLK_q: // down
+		{
+			m_velocity.y = -m_speed;
+			break;
+		}
+	case SDLK_e: // up
+		{
+			m_velocity.y = m_speed;
 			break;
 		}
 	}
@@ -60,24 +75,39 @@ void Avatar::OnKeyUp(int key)
 {
 	switch(key)
 	{
+	case SDLK_w:
 	case SDLK_UP:
 		{
 			m_velocity.z = 0.0f;
 			break;
 		}
+	case SDLK_s:
 	case SDLK_DOWN:
 		{
 			m_velocity.z = 0.0f;
 			break;
 		}
+	case SDLK_a:
 	case SDLK_LEFT:
 		{
 			m_velocity.x = 0.0f;
 			break;
 		}
+	case SDLK_d:
 	case SDLK_RIGHT:
 		{
 			m_velocity.x = 0.0f;
+			break;
+		}
+	// vertical
+	case SDLK_q: // down
+		{
+			m_velocity.y = 0.0f;
+			break;
+		}
+	case SDLK_e: // up
+		{
+			m_velocity.y = 0.0f;
 			break;
 		}
 	}

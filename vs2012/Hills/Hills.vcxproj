@@ -82,22 +82,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Common\Avatar.cpp" />
-    <ClCompile Include="..\..\Common\BaseApp.cpp" />
-    <ClCompile Include="..\..\Common\EyePatch.cpp" />
-    <ClCompile Include="..\..\Common\Oculus.cpp" />
-    <ClCompile Include="..\..\Common\ShaderHelper.cpp" />
-    <ClCompile Include="..\..\Common\TextFile.cpp" />
     <ClCompile Include="..\..\Hills\Hills.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Common\Avatar.h" />
     <ClInclude Include="..\..\Common\BaseApp.h" />
-    <ClInclude Include="..\..\Common\EyePatch.h" />
-    <ClInclude Include="..\..\Common\Logging.h" />
-    <ClInclude Include="..\..\Common\Oculus.h" />
     <ClInclude Include="..\..\Common\ShaderHelper.h" />
-    <ClInclude Include="..\..\Common\TextFile.h" />
+    <ClInclude Include="..\..\Common\VertexArray.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
