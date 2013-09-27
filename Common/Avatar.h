@@ -8,6 +8,7 @@
 #define _AVATAR_H_
 
 #include "OVR.h"
+#include <glm/glm.hpp>
 
 // forward declarations
 class Oculus;
@@ -32,13 +33,18 @@ public:
 
 	void SetupCamera(OVR::Util::Render::StereoEye eye);
 
-	OVR::Matrix4f GetEyeView(OVR::Util::Render::StereoEye eye);
+	glm::mat4 GetEyeView(OVR::Util::Render::StereoEye eye);
 
 private:
 	float m_speed;
 	OVR::Vector3f m_position;
 	OVR::Vector3f m_velocity;
 	const Oculus* m_oculus;
+
+	GLuint prog;
+	GLuint MatrixID;
+	GLuint ViewMatrixID;
+	GLuint ModelMatrixID;
 };
 
 #endif // _AVATAR_H_

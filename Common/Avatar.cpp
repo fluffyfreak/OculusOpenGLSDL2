@@ -9,6 +9,9 @@
 #include "sdl.h"
 #include "Oculus.h"
 #include "Avatar.h"
+#include "ShaderHelper.h"
+
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace {
 	void ApplyGLMatrix(const OVR::Matrix4f& matrix)
@@ -27,6 +30,15 @@ void Avatar::Start(const Oculus* oculus)
 {
 	m_oculus = oculus;
 	m_speed = 10.0f;
+
+	////////////////////////////////////////////////////////////////
+	// load the patch terrain shader
+	LoadShader(prog, "patch.vert", "patch.frag");
+
+	// Get a handle for our "MVP" uniform(s)
+	MatrixID		= glGetUniformLocation(prog, "MVP");
+	ViewMatrixID	= glGetUniformLocation(prog, "V");
+	ModelMatrixID	= glGetUniformLocation(prog, "M");
 }
 
 void Avatar::OnKeyDown(int key)
@@ -106,30 +118,50 @@ void Avatar::SetupCamera(OVR::Util::Render::StereoEye eye)
 		
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	ApplyGLMatrix(params.ViewAdjust);
-	ApplyGLMatrix(params.Projection);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-		
-	OVR::Matrix4f eye_view = GetEyeView(eye);
-	ApplyGLMatrix(eye_view);
+
+	////////////////////////////////////////////////////////////////
+	const float aspect = float(params.VP.w) / float(params.VP.h);
+
+	OVR::Matrix4f proj((params.ViewAdjust * params.Projection).Transposed());
+	glm::mat4 ProjectionMatrix;
+	for(int i=0; i<4; ++i) {
+		for(int j=0; j<4; ++j) {
+			ProjectionMatrix[i][j] = proj.M[i][j];
+		}
+	}
+
+	glm::mat4 ViewMatrix	= GetEyeView(eye);
+	glm::mat4 ModelMatrix	= glm::mat4(1.0);
+	glm::mat4 MVP			= ProjectionMatrix * ViewMatrix * ModelMatrix;
+
+	glUseProgram(prog);
+
+	// Send our transformation to the currently bound shader in the "MVP" uniform
+	glUniformMatrix4fv(MatrixID,		1, GL_FALSE, &MVP[0][0]);
+	glUniformMatrix4fv(ModelMatrixID,	1, GL_FALSE, &ModelMatrix[0][0]);
+	glUniformMatrix4fv(ViewMatrixID,	1, GL_FALSE, &ViewMatrix[0][0]);
 }
 
-OVR::Matrix4f Avatar::GetEyeView(OVR::Util::Render::StereoEye eye)
+glm::mat4 Avatar::GetEyeView(OVR::Util::Render::StereoEye eye)
 {
-	static const OVR::Vector3f UpVector(0.0f, 1.0f, 0.0f);
-	static const OVR::Vector3f ForwardVector(0.0f, 0.0f, -1.0f);
-	static const OVR::Vector3f RightVector(1.0f, 0.0f, 0.0f);
+	static const glm::vec4 UpVector(0.0f, 1.0f, 0.0f, 1.0f);
+	static const glm::vec4 ForwardVector(0.0f, 0.0f, -1.0f, 1.0f);
+	static const glm::vec4 RightVector(1.0f, 0.0f, 0.0f, 1.0f);
 
 	float yaw, pitch, roll;
 	m_oculus->GetSensorOrientation(yaw, pitch, roll);
-	OVR::Matrix4f eye_rpy = OVR::Matrix4f::RotationY(yaw) * OVR::Matrix4f::RotationX(pitch) * OVR::Matrix4f::RotationZ(roll);
+	glm::mat4 eye_rpy;
+	glm::rotate(eye_rpy, yaw,	glm::vec3(1.0f, 0.0f, 0.0f));
+	glm::rotate(eye_rpy, pitch, glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::rotate(eye_rpy, roll,	glm::vec3(0.0f, 0.0f, 1.0f));
 
-	OVR::Vector3f eye_pos = m_position;
-	OVR::Vector3f eye_forward = eye_rpy.Transform(ForwardVector);
-	OVR::Vector3f eye_up = eye_rpy.Transform(UpVector);
-	OVR::Vector3f eye_right = eye_rpy.Transform(RightVector);
-	OVR::Matrix4f eye_view = OVR::Matrix4f::LookAtRH(eye_pos, eye_pos + eye_forward, eye_up); 
+	glm::vec3 eye_pos		= glm::vec3(m_position.x, m_position.y, m_position.z);
+	glm::vec3 eye_forward	= glm::vec3(eye_rpy * ForwardVector);
+	glm::vec3 eye_up		= glm::vec3(eye_rpy * UpVector);
+	glm::vec3 eye_right		= glm::vec3(eye_rpy * RightVector);
+	glm::mat4 eye_view		= glm::lookAt(eye_pos, eye_pos + eye_forward, eye_up); 
 	return eye_view;
 }
