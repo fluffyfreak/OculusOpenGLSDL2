@@ -25,10 +25,10 @@ namespace {
 	const std::string fragstr("PosCol.frag");
 };
 
-class HillsApp : public BaseApp
+class ShapesApp : public BaseApp
 {
 public:
-	HillsApp(int argc, char * argv[]) : 
+	ShapesApp(int argc, char * argv[]) : 
 		BaseApp(),
 		mVAO(UINT_MAX),
 		mVertId(UINT_MAX),
@@ -38,12 +38,12 @@ public:
 	{
 	}
 
-	virtual ~HillsApp() {
+	virtual ~ShapesApp() {
 		Cleanup();
 	}
 
 	virtual bool Init() { 
-		InitHills();
+		InitShapes();
 		LoadShader(mShaderProg, vertstr, fragstr);
 		return true; 
 	}
@@ -55,63 +55,15 @@ public:
 
 		// draw left viewpoint
 		m_avatar.SetupCamera(OVR::Util::Render::StereoEye_Left);
-		DrawHills();
+		DrawShapes();
 
 		// draw right viewpoint
 		m_avatar.SetupCamera(OVR::Util::Render::StereoEye_Right);
-		DrawHills();
+		DrawShapes();
 	}; 
 
 private:
-	struct MeshData {
-		MeshData(AttributeSet attribs, int size=0) {
-			mVerts = new VertexArray(attribs, size);
-			mIndices.reserve(size*3*2);
-		}
-		~MeshData() {
-			delete mVerts;
-			mIndices.clear();
-		}
-		VertexArray *mVerts;
-		std::vector<Uint32> mIndices;
-	};
-
-	MeshData *CreateGrid(const float width, const float depth, const Uint32 vertsWide, const Uint32 vertsDeep)
-	{
-		MeshData *ret = new MeshData(ATTRIB_POSITION | ATTRIB_DIFFUSE, vertsWide*vertsDeep);
-
-		const float  halfWidth = width*0.5f;
-		const float  halfDepth = width*0.5f;
-
-		const float  dx = width/(vertsDeep - 1);
-		const float  dz = depth/(vertsWide - 1);
-
-		const float  du = 1.0f/(vertsDeep - 1);
-		const float  dv = 1.0f/(vertsWide - 1);
-
-		for (Uint32 i = 0; i < vertsWide; i++) {
-			const float z = halfDepth - i*dz;
-			for (Uint32 j = 0; j < vertsDeep; j++) {
-				const float x = -halfWidth + j*dx;
-				ret->mVerts->Add(glm::vec3(x, 0, z), glm::vec4(1,0,0,1));
-			}
-		}
-		for (Uint32 i = 0; i < vertsWide-1; i++) {
-			for (Uint32 j = 0; j < vertsDeep-1; j++) {
-				ret->mIndices.push_back(i*vertsDeep+j);
-				ret->mIndices.push_back(i*vertsDeep+j+1);
-				ret->mIndices.push_back((i+1)*vertsDeep+j);
-
-				ret->mIndices.push_back((i+1)*vertsDeep+j);
-				ret->mIndices.push_back(i*vertsDeep+j+1);
-				ret->mIndices.push_back((i+1)*vertsDeep+j+1);
-			}
-		}
-
-		return ret;
-	}
-
-	void InitHills() {
+	void InitShapes() {/*
 		// generate geometry
 		MeshData *pMesh = CreateGrid(160.0f, 160.0f, 50, 50);
 		mNumIndices = pMesh->mIndices.size();
@@ -158,10 +110,10 @@ private:
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 		// cleanup our local mesh geometry once we no longer need it
-		delete pMesh;
+		delete pMesh;*/
 	}
 
-	void DrawHills() {
+	void DrawShapes() {
 		// bind shader program
 		glUseProgram(mShaderProg);
 
@@ -262,7 +214,7 @@ private:
 
 int SDL_main(int argc, char * argv[])
 {	
-	HillsApp theApp(argc, argv);
+	ShapesApp theApp(argc, argv);
 
 	if( !theApp.Init() )
 		return 0;
