@@ -10,12 +10,7 @@
 #include "Oculus.h"
 #include "Avatar.h"
 
-namespace {
-	void ApplyGLMatrix(const OVR::Matrix4f& matrix)
-	{
-		glMultMatrixf(&(matrix.Transposed().M[0][0]));
-	}
-};
+#include <glm/gtc/matrix_transform.hpp>
 
 // handles basic movement in the scene.
 Avatar::Avatar()
@@ -134,32 +129,46 @@ void Avatar::SetupCamera(OVR::Util::Render::StereoEye eye)
 	const OVR::Util::Render::StereoEyeParams& params = m_oculus->GetStereoConfig().GetEyeRenderParams(eye);
 	glViewport(params.VP.x, params.VP.y, params.VP.w, params.VP.h);
 		
+	////////////////////////////////////////////////////////////////
+	const float aspect = float(params.VP.w) / float(params.VP.h);
+
+	OVR::Matrix4f proj((params.ViewAdjust * params.Projection));//.Transposed());
+	glm::mat4 ProjectionMatrix;
+	for(int i=0; i<4; ++i) {
+		for(int j=0; j<4; ++j) {
+			ProjectionMatrix[i][j] = proj.M[j][i];
+		}
+	}
+
+	ViewMatrix	= GetEyeView(eye);
+	ModelMatrix	= glm::mat4(1.0);
+	MVP			= ProjectionMatrix * ViewMatrix * ModelMatrix;
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	ApplyGLMatrix(params.ViewAdjust);
-	ApplyGLMatrix(params.Projection);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-		
-	OVR::Matrix4f eye_view = GetEyeView(eye);
-	ApplyGLMatrix(eye_view);
 }
 
-OVR::Matrix4f Avatar::GetEyeView(OVR::Util::Render::StereoEye eye)
+glm::mat4 Avatar::GetEyeView(OVR::Util::Render::StereoEye eye)
 {
-	static const OVR::Vector3f UpVector(0.0f, 1.0f, 0.0f);
-	static const OVR::Vector3f ForwardVector(0.0f, 0.0f, -1.0f);
-	static const OVR::Vector3f RightVector(1.0f, 0.0f, 0.0f);
+	static const glm::vec4 UpVector(0.0f, 1.0f, 0.0f, 1.0f);
+	static const glm::vec4 ForwardVector(0.0f, 0.0f, -1.0f, 1.0f);
+	static const glm::vec4 RightVector(1.0f, 0.0f, 0.0f, 1.0f);
 
 	float yaw, pitch, roll;
 	m_oculus->GetSensorOrientation(yaw, pitch, roll);
-	OVR::Matrix4f eye_rpy = OVR::Matrix4f::RotationY(yaw) * OVR::Matrix4f::RotationX(pitch) * OVR::Matrix4f::RotationZ(roll);
+	glm::mat4 eye_rpy;
+	
+	eye_rpy = glm::rotate(eye_rpy, OVR::RadToDegree(yaw),	glm::vec3(0.0f, 1.0f, 0.0f));
+	eye_rpy = glm::rotate(eye_rpy, OVR::RadToDegree(pitch), glm::vec3(1.0f, 0.0f, 0.0f));
+	eye_rpy = glm::rotate(eye_rpy, OVR::RadToDegree(roll),	glm::vec3(0.0f, 0.0f, 1.0f));
 
-	OVR::Vector3f eye_pos = m_position;
-	OVR::Vector3f eye_forward = eye_rpy.Transform(ForwardVector);
-	OVR::Vector3f eye_up = eye_rpy.Transform(UpVector);
-	OVR::Vector3f eye_right = eye_rpy.Transform(RightVector);
-	OVR::Matrix4f eye_view = OVR::Matrix4f::LookAtRH(eye_pos, eye_pos + eye_forward, eye_up); 
+	glm::vec3 eye_pos		= glm::vec3(m_position.x, m_position.y, m_position.z);
+	glm::vec3 eye_forward	= glm::vec3(eye_rpy * ForwardVector);
+	glm::vec3 eye_up		= glm::vec3(eye_rpy * UpVector);
+	glm::vec3 eye_right		= glm::vec3(eye_rpy * RightVector);
+	glm::mat4 eye_view		= glm::lookAt(eye_pos, eye_pos + eye_forward, eye_up); 
 	return eye_view;
 }

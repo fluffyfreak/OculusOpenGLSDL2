@@ -16,8 +16,10 @@ enum EShaderBinding {
 typedef std::pair<std::string,EShaderBinding> ShaderBindPair;
 typedef std::vector<ShaderBindPair> vecBindings;
 static const vecBindings s_nullBindings;
+static const std::string s_shaderVer;
+static const std::string s_shaderVer330("#version 330");
 
-bool LoadShader( unsigned int &prog, const std::string &vertstr, const std::string &fragstr, const vecBindings &includePaths = s_nullBindings );
+bool LoadShader( unsigned int &prog, const std::string &vertstr, const std::string &fragstr, const vecBindings &includePaths = s_nullBindings, const std::string& version = s_shaderVer );
 
 #endif // __shaderHelper_h__
 
