@@ -35,16 +35,19 @@ public:
 
 	glm::mat4 GetEyeView(OVR::Util::Render::StereoEye eye);
 
+	const glm::mat4& GetViewMatrix() const { return ViewMatrix; }
+	const glm::mat4& GetModelMatrix() const { return ModelMatrix; }
+	const glm::mat4& GetMVP() const { return MVP; }
+
 private:
 	float m_speed;
 	OVR::Vector3f m_position;
 	OVR::Vector3f m_velocity;
 	const Oculus* m_oculus;
 
-	GLuint prog;
-	GLuint MatrixID;
-	GLuint ViewMatrixID;
-	GLuint ModelMatrixID;
+	glm::mat4 ViewMatrix;
+	glm::mat4 ModelMatrix;
+	glm::mat4 MVP;
 };
 
 #endif // _AVATAR_H_
