@@ -37,14 +37,15 @@ const std::string RemovePath(const std::string& filename)
   return filename.substr(path_sz + 1,sz - 1 - path_sz);
 }
 
-bool LoadShader( unsigned int &prog, const std::string &vertstr, const std::string &fragstr, const vecBindings &includePaths /* = s_nullBindings */ )
+bool LoadShader( unsigned int &prog, const std::string &vertstr, const std::string &fragstr, const vecBindings &includePaths /* = s_nullBindings */, const std::string& version /* = s_shaderVer */ )
 {
 	bool success = true;
 	GLuint v,f;
-	std::string vs("#version 120\n\n"), fs("#version 120\n\n");
+	std::string vs(version), fs(version);
 	const int MaxInfoLogLength = 2048;
 	GLchar infoLog[MaxInfoLogLength];
 	GLsizei length=0;
+	int InfoLogLength;
 	GLint param = GL_TRUE;
 
 	std::stringstream log;
@@ -108,6 +109,12 @@ bool LoadShader( unsigned int &prog, const std::string &vertstr, const std::stri
 				log << "GLSL Error compiling \"" << vertstr.c_str() << "\": \n" << infoLog << "\n";
 				success = false;
 			}
+			glGetShaderiv(v, GL_INFO_LOG_LENGTH, &InfoLogLength);
+			if ( InfoLogLength > 0 ){
+					std::vector<char> VertexShaderErrorMessage(InfoLogLength+1);
+					glGetShaderInfoLog(v, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
+					log << &VertexShaderErrorMessage[0] << "\n\n";
+			}
 		}
 
 		glShaderSource(f, 1, &ff,NULL);
@@ -119,6 +126,12 @@ bool LoadShader( unsigned int &prog, const std::string &vertstr, const std::stri
 				glGetShaderInfoLog(f,MaxInfoLogLength,&length,infoLog);
 				log << "GLSL Error compiling \"" << fragstr.c_str() << "\": \n" << infoLog << "\n";
 				success = false;
+			}
+			glGetShaderiv(f, GL_INFO_LOG_LENGTH, &InfoLogLength);
+			if ( InfoLogLength > 0 ){
+					std::vector<char> FragmentShaderErrorMessage(InfoLogLength+1);
+					glGetShaderInfoLog(f, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
+					log << &FragmentShaderErrorMessage[0] << "\n\n";
 			}
 		}
 
@@ -134,6 +147,12 @@ bool LoadShader( unsigned int &prog, const std::string &vertstr, const std::stri
 			log << "GLSL Link Error with: \n -- vertex prog \"" << vertstr.c_str() << "\" and \n";
 			log << " -- fragement prog \"" << fragstr.c_str() << "\": \n" << infoLog << "\n\n";
 			success = false;
+		}
+		glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &InfoLogLength);
+		if ( InfoLogLength > 0 ){
+				std::vector<char> ProgramErrorMessage(InfoLogLength+1);
+				glGetProgramInfoLog(prog, InfoLogLength, NULL, &ProgramErrorMessage[0]);
+				log << &ProgramErrorMessage[0] << "\n\n";
 		}
 
 		if(!success) {
