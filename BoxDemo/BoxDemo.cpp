@@ -55,6 +55,12 @@ public:
 	virtual bool Init() { 
 		InitBox();
 		LoadShader(mShaderProg, vertstr, fragstr); 
+
+		// Get a handle for our "MVP" uniform(s)
+		MatrixID		= glGetUniformLocation(mShaderProg, "MVP");
+		ViewMatrixID	= glGetUniformLocation(mShaderProg, "V");
+		ModelMatrixID	= glGetUniformLocation(mShaderProg, "M");
+		
 		return true;
 	}
 
@@ -124,6 +130,15 @@ private:
 		// bind shader program
 		glUseProgram(mShaderProg);
 
+		ViewMatrix = m_avatar.GetViewMatrix();
+		ModelMatrix = m_avatar.GetModelMatrix();
+		MVP = m_avatar.GetMVP();
+
+		// Send our transformation to the currently bound shader in the "MVP" uniform
+		glUniformMatrix4fv(MatrixID,		1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(ModelMatrixID,	1, GL_FALSE, &ModelMatrix[0][0]);
+		glUniformMatrix4fv(ViewMatrixID,	1, GL_FALSE, &ViewMatrix[0][0]);
+
 		// bind buffers
 		GLuint attributeIndex = 0;
 		glBindVertexArray(mVAO);
@@ -183,10 +198,18 @@ private:
 	}
 
 	GLuint mShaderProg;
+	GLuint MatrixID;
+	GLuint ViewMatrixID;
+	GLuint ModelMatrixID;
+
 	GLuint mVAO;
 	GLuint mVertObjId;
 	GLuint mColourObjId;
 	GLuint mElementBufferId;
+
+	glm::mat4 ViewMatrix;
+	glm::mat4 ModelMatrix;
+	glm::mat4 MVP;
 
 	static const glm::vec3 vertices[];
 	static const glm::vec4 colours[];

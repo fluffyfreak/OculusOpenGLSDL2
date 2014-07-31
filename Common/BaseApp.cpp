@@ -23,6 +23,12 @@
 #include "EyePatch.h"
 
 #include "BaseApp.h"
+#include "ShaderHelper.h"
+
+namespace {
+	const std::string vertstr("HMDWarp.vert");
+	const std::string fragstr("HMDWarp.frag");
+};
 
 void APIENTRY gl_debug_callback(	GLenum source,
 									GLenum type,
@@ -36,54 +42,6 @@ void APIENTRY gl_debug_callback(	GLenum source,
 	if(severity == GL_DEBUG_SEVERITY_HIGH)
 		debug_break();
 }
-
-static const char* gl_vertex_shader_code = 
-"#version 330 core\n"
-"\n"
-"layout(location = 0) in vec3 Position;\n"
-"layout(location = 1) in vec2 TexCoord;\n"
-"out vec2 oTexCoord;\n"
-"\n"
-"void main()\n"
-"{\n"
-"   gl_Position = vec4(Position, 1);\n"
-"   oTexCoord = TexCoord;\n"
-"};\n";
-
-static const char* gl_fragment_shader_code = 
-"#version 330\n"
-"\n"
-"uniform vec2 LensCenter;\n"
-"uniform vec2 ScreenCenter;\n"
-"uniform vec2 Scale;\n"
-"uniform vec2 ScaleIn;\n"
-"uniform vec4 HmdWarpParam;\n"
-"uniform sampler2D texture0;\n"
-"varying vec2 oTexCoord;\n"
-"out vec4 outcolor;\n"
-"\n"
-"vec2 HmdWarp(vec2 in01)\n"
-"{\n"
-"   vec2  theta = (in01 - LensCenter) * ScaleIn; // Scales to [-1, 1]\n"
-"   float rSq = theta.x * theta.x + theta.y * theta.y;\n"
-"   vec2  theta1 = theta * (HmdWarpParam.x + HmdWarpParam.y * rSq + \n"
-"                           HmdWarpParam.z * rSq * rSq + HmdWarpParam.w * rSq * rSq * rSq);\n"
-"   return LensCenter + Scale * theta1;\n"
-"}\n"
-"void main()\n"
-"{\n"
-"   vec2 tc = HmdWarp(oTexCoord);\n"
-"   if (!all(equal(clamp(tc, ScreenCenter-vec2(0.25,0.5), ScreenCenter+vec2(0.25,0.5)), tc)))\n"
-"       outcolor = vec4(0);\n"
-"   else\n"
-"	   outcolor = texture2D(texture0, tc);\n"
-"};\n";
-
-
-
-// main object encapsulation.
-/*Avatar m_avatar;
-Scene m_scene;*/
 
 BaseApp::BaseApp() : 
 	sdl_use_vertex_shaders(true),
@@ -270,59 +228,7 @@ void BaseApp::SetupShaders()
 		m_eye_patch[i].Setup((OVR::Util::Render::StereoEye) i);
 	}
 	
-	// Now create the shaders
-	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-
-	GLint Result = GL_FALSE;
-	int InfoLogLength;
-	
-    // Compile Vertex Shader
-    trace("Compiling vertex shader");
-    glShaderSource(VertexShaderID, 1, &gl_vertex_shader_code , NULL);
-    glCompileShader(VertexShaderID);
-
-    // Check Vertex Shader
-    glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
-    glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-    if ( InfoLogLength > 0 ){
-            std::vector<char> VertexShaderErrorMessage(InfoLogLength+1);
-            glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
-            trace("%s", &VertexShaderErrorMessage[0]);
-    }
-
-	// Compile Fragment Shader
-    trace("Compiling fragment shader");
-    glShaderSource(FragmentShaderID, 1, &gl_fragment_shader_code , NULL);
-    glCompileShader(FragmentShaderID);
-
-    // Check Fragment Shader
-    glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
-    glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-    if ( InfoLogLength > 0 ){
-            std::vector<char> FragmentShaderErrorMessage(InfoLogLength+1);
-            glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
-            trace("%s", &FragmentShaderErrorMessage[0]);
-    }
-
-    // Link the program
-    trace("Linking program");
-    gl_fragment_shader_program = glCreateProgram();
-    glAttachShader(gl_fragment_shader_program, VertexShaderID);
-    glAttachShader(gl_fragment_shader_program, FragmentShaderID);
-    glLinkProgram(gl_fragment_shader_program);
-
-    // Check the program
-    glGetProgramiv(gl_fragment_shader_program, GL_LINK_STATUS, &Result);
-    glGetProgramiv(gl_fragment_shader_program, GL_INFO_LOG_LENGTH, &InfoLogLength);
-    if ( InfoLogLength > 0 ){
-            std::vector<char> ProgramErrorMessage(InfoLogLength+1);
-            glGetProgramInfoLog(gl_fragment_shader_program, InfoLogLength, NULL, &ProgramErrorMessage[0]);
-            trace("%s", &ProgramErrorMessage[0]);
-    }
-
-    glDeleteShader(VertexShaderID);
-    glDeleteShader(FragmentShaderID);
+	LoadShader(gl_fragment_shader_program, vertstr, fragstr); 
 }
 
 int BaseApp::Run() {
